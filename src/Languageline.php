@@ -1,8 +1,8 @@
 <?php
 
-namespace CodersStudio\Languageline;
+namespace Nos\Languageline;
 
 class Languageline
 {
-    // Build wonderful things
+
 }

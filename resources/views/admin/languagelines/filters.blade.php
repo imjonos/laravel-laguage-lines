@@ -1,10 +1,10 @@
 <div class="row">
 	<div class="col-md-3">
-	@component('codersstudio.crud::fields.text', [
+	@component('nos.crud::fields.text', [
 	'required' => 0
 ])
     @slot('label')
-        @lang('codersstudio.languageline::languageline.table.columns.id')
+        @lang('nos.languageline::languageline.table.columns.id')
     @endslot
     @slot('vModel')
         form.id
@@ -13,17 +13,17 @@
         id
     @endslot
     @slot('placeholder')
-     	@lang('codersstudio.languageline::languageline.table.columns.id')
+     	@lang('nos.languageline::languageline.table.columns.id')
     @endslot
 @endcomponent
 
 </div>
 <div class="col-md-3">
-	@component('codersstudio.crud::fields.text', [
+	@component('nos.crud::fields.text', [
 	'required' => 0
 ])
     @slot('label')
-        @lang('codersstudio.languageline::languageline.table.columns.group')
+        @lang('nos.languageline::languageline.table.columns.group')
     @endslot
     @slot('vModel')
         form.group
@@ -32,17 +32,17 @@
         group
     @endslot
     @slot('placeholder')
-     	@lang('codersstudio.languageline::languageline.table.columns.group')
+     	@lang('nos.languageline::languageline.table.columns.group')
     @endslot
 @endcomponent
 
 </div>
 <div class="col-md-3">
-	@component('codersstudio.crud::fields.text', [
+	@component('nos.crud::fields.text', [
 	'required' => 0
 ])
     @slot('label')
-        @lang('codersstudio.languageline::languageline.table.columns.key')
+        @lang('nos.languageline::languageline.table.columns.key')
     @endslot
     @slot('vModel')
         form.key
@@ -51,17 +51,17 @@
         key
     @endslot
     @slot('placeholder')
-     	@lang('codersstudio.languageline::languageline.table.columns.key')
+     	@lang('nos.languageline::languageline.table.columns.key')
     @endslot
 @endcomponent
 
 </div>
 <div class="col-md-3">
-	@component('codersstudio.crud::fields.text', [
+	@component('nos.crud::fields.text', [
 	'required' => 0
 ])
     @slot('label')
-        @lang('codersstudio.languageline::languageline.table.columns.text')
+        @lang('nos.languageline::languageline.table.columns.text')
     @endslot
     @slot('vModel')
         form.text
@@ -70,7 +70,7 @@
         text
     @endslot
     @slot('placeholder')
-     	@lang('codersstudio.languageline::languageline.table.columns.text')
+     	@lang('nos.languageline::languageline.table.columns.text')
     @endslot
 @endcomponent
 

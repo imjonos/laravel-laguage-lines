@@ -11,14 +11,14 @@
  * info@coders.studio
  */
 
-namespace CodersStudio\LanguageLine\Http\Requests;
+namespace Nos\LanguageLine\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Gate;
 
 /**
  * Class DestroyRequest
- * @package CodersStudio\CRUD
+ * @package Nos\CRUD
  */
 class DestroyRequest extends FormRequest
 {

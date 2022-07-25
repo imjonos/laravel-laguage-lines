@@ -1,5 +1,5 @@
 @foreach($languages AS $lang => $dir)
-    @component('codersstudio.crud::fields.text', [ 'required' => 1])
+    @component('nos.crud::fields.text', [ 'required' => 1])
         @slot('label')
             {{$lang}}
         @endslot
@@ -10,7 +10,7 @@
             text
         @endslot
         @slot('placeholder')
-            @lang('codersstudio.languageline::languageline.table.columns.text')
+            @lang('nos.languageline::languageline.table.columns.text')
         @endslot
     @endcomponent
 @endforeach

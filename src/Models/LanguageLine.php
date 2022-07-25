@@ -1,14 +1,9 @@
 <?php
-/**
- * CodersStudio 2019
- *  https://coders.studio
- *  info@coders.studio
- */
 
-namespace CodersStudio\Languageline\Models;
+namespace Nos\Languageline\Models;
 
+use Nos\CRUD\Traits\Crudable;
 use Spatie\TranslationLoader\LanguageLine as SpatieModel;
-use CodersStudio\CRUD\Traits\Crudable;
 
 class LanguageLine extends SpatieModel
 {
@@ -19,16 +14,16 @@ class LanguageLine extends SpatieModel
      * @var array
      */
     protected $sortable = [
-                            'id',
-                            'group',
-                            'key',
-                            'text',
+        'id',
+        'group',
+        'key',
+        'text',
     ];
 
     protected $fillable = [
-                            'group',
-                            'key',
-                            'text',
+        'group',
+        'key',
+        'text',
     ];
 
     protected $hidden = [];
@@ -37,7 +32,8 @@ class LanguageLine extends SpatieModel
     /**
      * Get language lines table columns
      */
-    public function getTableColumns() {
+    public function getTableColumns()
+    {
         return $this->getConnection()->getSchemaBuilder()->getColumnListing($this->getTable());
     }
 
@@ -47,9 +43,9 @@ class LanguageLine extends SpatieModel
      * @param $val
      * @return mixed
      */
-    public function scopeOfOrderColumn($query,$val)
+    public function scopeOfOrderColumn($query, $val)
     {
-        return $query->orderBy($val,request()->get('order_direction', 'ASC'));
+        return $query->orderBy($val, request()->get('order_direction', 'ASC'));
     }
 
     /**
@@ -58,9 +54,9 @@ class LanguageLine extends SpatieModel
      * @param $value
      * @return mixed
      */
-    public function scopeOfId($query,$value)
+    public function scopeOfId($query, $value)
     {
-        return $query->where('id','=',$value);
+        return $query->where('id', '=', $value);
     }
 
     /**
@@ -69,9 +65,9 @@ class LanguageLine extends SpatieModel
      * @param $value
      * @return mixed
      */
-    public function scopeOfGroup($query,$value)
+    public function scopeOfGroup($query, $value)
     {
-        return $query->where('group','like', "%".$value."%");
+        return $query->where('group', 'like', "%" . $value . "%");
     }
 
     /**
@@ -80,9 +76,9 @@ class LanguageLine extends SpatieModel
      * @param $value
      * @return mixed
      */
-    public function scopeOfKey($query,$value)
+    public function scopeOfKey($query, $value)
     {
-        return $query->where('key','like', "%".$value."%");
+        return $query->where('key', 'like', "%" . $value . "%");
     }
 
     /**
@@ -91,8 +87,8 @@ class LanguageLine extends SpatieModel
      * @param $value
      * @return mixed
      */
-    public function scopeOfText($query,$value)
+    public function scopeOfText($query, $value)
     {
-        return $query->where('text','like', "%".$value."%");
+        return $query->where('text', 'like', "%" . $value . "%");
     }
 }

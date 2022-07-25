@@ -1,14 +1,9 @@
 <?php
-/**
- * CodersStudio 2019
- * https://coders.studio
- * info@coders.studio
- */
 
-namespace CodersStudio\LanguageLine\Exports;
+namespace Nos\LanguageLine\Exports;
 
-use Maatwebsite\Excel\Concerns\{FromCollection, Exportable};
-use CodersStudio\LanguageLine\Models\LanguageLine;
+use Maatwebsite\Excel\Concerns\{Exportable, FromCollection};
+use Nos\LanguageLine\Models\LanguageLine;
 
 class LanguageLinesExport implements FromCollection
 {

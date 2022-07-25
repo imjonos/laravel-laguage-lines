@@ -5,10 +5,10 @@
  * info@coders.studio
  */
 
-namespace CodersStudio\LanguageLine\Imports;
+namespace Nos\LanguageLine\Imports;
 
 use Maatwebsite\Excel\Concerns\{ToModel, Importable};
-use CodersStudio\LanguageLine\Models\LanguageLine;
+use Nos\LanguageLine\Models\LanguageLine;
 
 class LanguageLinesImport implements ToModel
 {

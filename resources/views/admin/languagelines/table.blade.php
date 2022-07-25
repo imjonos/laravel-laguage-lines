@@ -9,44 +9,44 @@
                     <label class="custom-control-label" for="selectAll"></label>
                 </div>
             </th>
-            @component('codersstudio.crud::th', [
+            @component('nos.crud::th', [
                 'order' => true
             ])
                 @slot('columnName')
                     id
                 @endslot
                 @slot('title')
-                    @lang('codersstudio.languageline::languageline.table.columns.id')
+                    @lang('nos.languageline::languageline.table.columns.id')
                 @endslot
             @endcomponent
-            @component('codersstudio.crud::th', [
+            @component('nos.crud::th', [
                 'order' => true
             ])
                 @slot('columnName')
                     group
                 @endslot
                 @slot('title')
-                    @lang('codersstudio.languageline::languageline.table.columns.group')
+                    @lang('nos.languageline::languageline.table.columns.group')
                 @endslot
             @endcomponent
-            @component('codersstudio.crud::th', [
+            @component('nos.crud::th', [
                 'order' => true
             ])
                 @slot('columnName')
                     key
                 @endslot
                 @slot('title')
-                    @lang('codersstudio.languageline::languageline.table.columns.key')
+                    @lang('nos.languageline::languageline.table.columns.key')
                 @endslot
             @endcomponent
-            @component('codersstudio.crud::th', [
+            @component('nos.crud::th', [
                 'order' => true
             ])
                 @slot('columnName')
                     text
                 @endslot
                 @slot('title')
-                    @lang('codersstudio.languageline::languageline.table.columns.text')
+                    @lang('nos.languageline::languageline.table.columns.text')
                 @endslot
             @endcomponent
 

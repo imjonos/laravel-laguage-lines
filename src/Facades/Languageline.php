@@ -1,6 +1,6 @@
 <?php
 
-namespace CodersStudio\Languageline\Facades;
+namespace Nos\Languageline\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
@@ -11,7 +11,7 @@ class Languageline extends Facade
      *
      * @return string
      */
-    protected static function getFacadeAccessor()
+    protected static function getFacadeAccessor(): string
     {
         return 'languageline';
     }
