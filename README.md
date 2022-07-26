@@ -1,20 +1,27 @@
 # Laravel Language Lines
+
 Laravel package for work with translations from DB
 
-CRUD package requared
+CRUD package required https://github.com/imjonos/laravel-crud-generator
 
 ./artisan migrate
 ./artisan vendor:publish
 
-Added this to ./resources/js/vendor/codersstudio/crud/index.js
+Need to add these
 
 require('./../languageline/components/create.js');
+
 require('./../languageline/components/edit.js');
+
 require('./../languageline/components/index.js');
+
+to file:
+
+./resources/js/vendor/nos/crud/index.js
 
 # MIT License
 
-Copyright (c) 2020 Eugeny Nosenko
+Copyright (c) 2022 Eugeny Nosenko
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
