@@ -2,10 +2,20 @@
 
 namespace Nos\Languageline\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Nos\CRUD\Traits\Crudable;
 use Spatie\TranslationLoader\LanguageLine as SpatieModel;
 
-class LanguageLine extends SpatieModel
+/**
+ * @property int $id
+ * @property string $group
+ * @property string $key
+ * @property string $text
+ *
+ * @method Builder ofGroup(string $group)
+ * @method Builder ofKey(string $key)
+ */
+final class LanguageLine extends SpatieModel
 {
     use Crudable;
 
@@ -17,13 +27,13 @@ class LanguageLine extends SpatieModel
         'id',
         'group',
         'key',
-        'text',
+        'text'
     ];
 
     protected $fillable = [
         'group',
         'key',
-        'text',
+        'text'
     ];
 
     protected $hidden = [];
@@ -32,62 +42,51 @@ class LanguageLine extends SpatieModel
     /**
      * Get language lines table columns
      */
-    public function getTableColumns()
+    public function getTableColumns(): array
     {
         return $this->getConnection()->getSchemaBuilder()->getColumnListing($this->getTable());
     }
 
     /**
-     * Scope for filtering results
-     * @param $query
-     * @param $val
-     * @return mixed
-     */
-    public function scopeOfOrderColumn($query, $val)
-    {
-        return $query->orderBy($val, request()->get('order_direction', 'ASC'));
-    }
-
-    /**
      * Scope for filtering by id
-     * @param $query
-     * @param $value
-     * @return mixed
+     * @param Builder $query
+     * @param int $value
+     * @return Builder
      */
-    public function scopeOfId($query, $value)
+    public function scopeOfId(Builder $query, int $value): Builder
     {
         return $query->where('id', '=', $value);
     }
 
     /**
      * Scope for filtering by group
-     * @param $query
-     * @param $value
-     * @return mixed
+     * @param Builder $query
+     * @param string $value
+     * @return Builder
      */
-    public function scopeOfGroup($query, $value)
+    public function scopeOfGroup(Builder $query, string $value): Builder
     {
         return $query->where('group', 'like', "%" . $value . "%");
     }
 
     /**
      * Scope for filtering by key
-     * @param $query
-     * @param $value
-     * @return mixed
+     * @param Builder $query
+     * @param string $value
+     * @return Builder
      */
-    public function scopeOfKey($query, $value)
+    public function scopeOfKey(Builder $query, string $value): Builder
     {
         return $query->where('key', 'like', "%" . $value . "%");
     }
 
     /**
      * Scope for filtering by text
-     * @param $query
-     * @param $value
-     * @return mixed
+     * @param Builder $query
+     * @param string $value
+     * @return Builder
      */
-    public function scopeOfText($query, $value)
+    public function scopeOfText(Builder $query, string $value): Builder
     {
         return $query->where('text', 'like', "%" . $value . "%");
     }

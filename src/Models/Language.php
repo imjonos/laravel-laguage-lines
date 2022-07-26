@@ -1,15 +1,22 @@
 <?php
 
-namespace App\Models;
+namespace Nos\Languageline\Models;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Nos\CRUD\Traits\Crudable;
 
 /**
+ * @property int $id
+ * @property string $abbr
+ * @property string $locale
+ * @property string $name
+ * @property bool $active
+ *
  * @method Builder ofAbbr(string $value)
+ * @method Builder active()
  */
-class Language extends Model
+final class Language extends Model
 {
     use Crudable;
 
@@ -48,26 +55,14 @@ class Language extends Model
 
     /**
      * Scope for filtering by id
-     * @param $query
-     * @param $value
-     * @return mixed
+     * @param Builder $query
+     * @param int $value
+     * @return Builder
      */
-    public function scopeOfId($query, $value)
+    public function scopeOfId(Builder $query, int $value): Builder
     {
         return $query->where('id', '=', $value);
     }
-
-    /**
-     * Scope for filtering by id
-     * @param $query
-     * @param $value
-     * @return mixed
-     */
-    public function scopeOfAbbrWhere($query, $value)
-    {
-        return $query->where('abbr', '!=', $value);
-    }
-
 
     /**
      * Scope for filtering by abbr
@@ -84,11 +79,11 @@ class Language extends Model
 
     /**
      * Scope for filtering by locale
-     * @param $query
-     * @param $value
-     * @return mixed
+     * @param Builder $query
+     * @param string $value
+     * @return Builder
      */
-    public function scopeOfLocale($query, $value)
+    public function scopeOfLocale(Builder $query, string $value): Builder
     {
         return $query->where('locale', 'like', '%' . $value . '%');
     }
@@ -96,240 +91,33 @@ class Language extends Model
 
     /**
      * Scope for filtering by name
-     * @param $query
-     * @param $value
-     * @return mixed
+     * @param Builder $query
+     * @param string $value
+     * @return Builder
      */
-    public function scopeOfName($query, $value)
+    public function scopeOfName(Builder $query, string $value): Builder
     {
         return $query->where('name', 'like', '%' . $value . '%');
     }
 
-
-    /**
-     * Scope for filtering by native
-     * @param $query
-     * @param $value
-     * @return mixed
-     */
-    public function scopeOfNative($query, $value)
-    {
-        return $query->where('native', 'like', '%' . $value . '%');
-    }
-
-
-    /**
-     * Scope for filtering by flag
-     * @param $query
-     * @param $value
-     * @return mixed
-     */
-    public function scopeOfFlag($query, $value)
-    {
-        return $query->where('flag', 'like', '%' . $value . '%');
-    }
-
-
-    /**
-     * Scope for filtering by app_name
-     * @param $query
-     * @param $value
-     * @return mixed
-     */
-    public function scopeOfAppName($query, $value)
-    {
-        return $query->where('app_name', 'like', '%' . $value . '%');
-    }
-
-
-    /**
-     * Scope for filtering by script
-     * @param $query
-     * @param $value
-     * @return mixed
-     */
-    public function scopeOfScript($query, $value)
-    {
-        return $query->where('script', 'like', '%' . $value . '%');
-    }
-
-
-    /**
-     * Scope for filtering by direction
-     * @param $query
-     * @param $value
-     * @return mixed
-     */
-    public function scopeOfDirection($query, $value)
-    {
-        return $query->where('direction', 'like', '%' . $value . '%');
-    }
-
-
-    /**
-     * Scope for filtering by russian_pluralization
-     * @param $query
-     * @param $value
-     * @return mixed
-     */
-    public function scopeOfRussianPluralization($query, $value)
-    {
-        return $query->where('russian_pluralization', '=', $value);
-    }
-
-
     /**
      * Scope for filtering by active
-     * @param $query
-     * @param $value
-     * @return mixed
+     * @param Builder $query
+     * @param int $value
+     * @return Builder
      */
-    public function scopeOfActive($query, $value)
+    public function scopeOfActive(Builder $query, int $value): Builder
     {
         return $query->where('active', '=', $value);
     }
 
     /**
      * Scope for filtering by active
-     * @param $query
-     * @return mixed
+     * @param Builder $query
+     * @return Builder
      */
-    public function scopeActive($query)
+    public function scopeActive(Builder $query): Builder
     {
         return $query->where('active', '=', 1);
     }
-
-
-    /**
-     * Scope for filtering by default
-     * @param $query
-     * @param $value
-     * @return mixed
-     */
-    public function scopeOfDefault($query, $value)
-    {
-        return $query->where('default', '=', $value);
-    }
-
-
-    /**
-     * Scope for filtering by parent_id
-     * @param $query
-     * @param $value
-     * @return mixed
-     */
-    public function scopeOfParentId($query, $value)
-    {
-        return $query->where('parent_id', '=', $value);
-    }
-
-
-    /**
-     * Scope for filtering by lft
-     * @param $query
-     * @param $value
-     * @return mixed
-     */
-    public function scopeOfLft($query, $value)
-    {
-        return $query->where('lft', '=', $value);
-    }
-
-
-    /**
-     * Scope for filtering by rgt
-     * @param $query
-     * @param $value
-     * @return mixed
-     */
-    public function scopeOfRgt($query, $value)
-    {
-        return $query->where('rgt', '=', $value);
-    }
-
-
-    /**
-     * Scope for filtering by depth
-     * @param $query
-     * @param $value
-     * @return mixed
-     */
-    public function scopeOfDepth($query, $value)
-    {
-        return $query->where('depth', '=', $value);
-    }
-
-
-    /**
-     * Scope for filtering by keywords_location
-     * @param $query
-     * @param $value
-     * @return mixed
-     */
-    public function scopeOfKeywordsLocation($query, $value)
-    {
-        return $query->where('keywords_location', 'like', '%' . $value . '%');
-    }
-
-
-    /**
-     * Scope for filtering by category_name
-     * @param $query
-     * @param $value
-     * @return mixed
-     */
-    public function scopeOfCategoryName($query, $value)
-    {
-        return $query->where('category_name', 'like', '%' . $value . '%');
-    }
-
-
-    /**
-     * Scope for filtering by keywords_icon
-     * @param $query
-     * @param $value
-     * @return mixed
-     */
-    public function scopeOfKeywordsIcon($query, $value)
-    {
-        return $query->where('keywords_icon', 'like', '%' . $value . '%');
-    }
-
-
-    /**
-     * Scope for filtering by keywords_country
-     * @param $query
-     * @param $value
-     * @return mixed
-     */
-    public function scopeOfKeywordsCountry($query, $value)
-    {
-        return $query->where('keywords_country', 'like', '%' . $value . '%');
-    }
-
-
-    /**
-     * Scope for filtering by keywords_city
-     * @param $query
-     * @param $value
-     * @return mixed
-     */
-    public function scopeOfKeywordsCity($query, $value)
-    {
-        return $query->where('keywords_city', 'like', '%' . $value . '%');
-    }
-
-
-    /**
-     * Scope for filtering by keywords_job
-     * @param $query
-     * @param $value
-     * @return mixed
-     */
-    public function scopeOfKeywordsJob($query, $value)
-    {
-        return $query->where('keywords_job', 'like', '%' . $value . '%');
-    }
-
-
 }

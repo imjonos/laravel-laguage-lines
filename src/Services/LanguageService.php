@@ -3,9 +3,9 @@
 namespace Nos\Languageline\Services;
 
 use Nos\CRUD\Services\BaseService;
-use Nos\LanguageLine\Repositories\LanguageRepository;
+use Nos\LanguageLine\Interfaces\Repositories\LanguageRepositoryInterface;
 
 final class LanguageService extends BaseService
 {
-    protected string $repositoryClass = LanguageRepository::class;
+    protected string $repositoryClass = LanguageRepositoryInterface::class;
 }

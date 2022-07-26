@@ -4,13 +4,17 @@ namespace Nos\LanguageLine\Repositories;
 
 use Nos\CRUD\Repositories\BaseRepository;
 use Nos\LanguageLine\Interfaces\Repositories\LanguageRepositoryInterface;
+use Nos\Languageline\Models\Language;
 
+/**
+ * @method Language getModel()
+ */
 final class LanguageRepository extends BaseRepository implements LanguageRepositoryInterface
 {
-    protected string $class = '';
+    protected string $class = Language::class;
 
-    public function __construct()
+    public function findByAbbr(string $abbr): ?Language
     {
-        $this->class = config('languageline.LanguageModel');
+        return $this->getModel()->ofAbbr($abbr)->first();
     }
 }

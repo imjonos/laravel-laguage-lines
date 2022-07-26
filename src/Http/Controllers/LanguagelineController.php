@@ -25,6 +25,7 @@ use Nos\LanguageLine\Http\Requests\{CreateRequest,
 };
 use Nos\LanguageLine\Imports\LanguageLinesImport;
 use Nos\LanguageLine\Models\LanguageLine;
+use Nos\Languageline\Services\LanguageLineService;
 use Nos\Languageline\Services\LanguageService;
 
 /**
@@ -38,10 +39,12 @@ class LanguagelineController extends Controller
     use Importable;
 
     private LanguageService $languageService;
+    private LanguageLineService $languageLineService;
 
-    public function __construct(LanguageService $languageService)
+    public function __construct(LanguageService $languageService, LanguageLineService $languageLineService)
     {
         $this->languageService = $languageService;
+        $this->languageLineService = $languageLineService;
     }
 
     /**
@@ -105,6 +108,38 @@ class LanguagelineController extends Controller
     public function create(CreateRequest $request): Factory|View
     {
         return view("nos.languageline::admin.languagelines.create", ['languages' => $this->getDirsWithLanguages()]);
+    }
+
+    /**
+     * Get Array with languages name and path
+     * @return array ['language_name' => directory_path]
+     * @throws BindingResolutionException
+     * @throws Exception
+     */
+    protected function getDirsWithLanguages(): array
+    {
+        $result = [];
+        $fs = new Filesystem();
+        $dirs = $fs->directories(base_path("resources/lang"));
+        foreach ($dirs as $dir) {
+            $lang = basename($dir);
+            if ($lang != "vendor") {
+                $result[$lang] = $dir;
+
+                // save a language to DB if doesnt exists
+                $result = $this->languageService->search(['abbr' => $lang]);
+
+                if (!$result->count()) {
+                    $this->languageService->create([
+                        'abbr' => $lang,
+                        'name' => $lang,
+                        'active' => 1
+                    ]);
+                }
+            }
+        }
+
+        return $result;
     }
 
     /**
@@ -217,38 +252,6 @@ class LanguagelineController extends Controller
         $this->storeLanguagesVarsToDB();
 
         return response()->json([], "204");
-    }
-
-    /**
-     * Get Array with languages name and path
-     * @return array ['language_name' => directory_path]
-     * @throws BindingResolutionException
-     * @throws Exception
-     */
-    protected function getDirsWithLanguages(): array
-    {
-        $result = [];
-        $fs = new Filesystem();
-        $dirs = $fs->directories(base_path("resources/lang"));
-        foreach ($dirs as $dir) {
-            $lang = basename($dir);
-            if ($lang != "vendor") {
-                $result[$lang] = $dir;
-
-                // save a language to DB if doesnt exists
-                $result = $this->languageService->search(['abbr' => $lang]);
-
-                if (!$result->count()) {
-                    $this->languageService->create([
-                        'abbr' => $lang,
-                        'name' => $lang,
-                        'active' => 1
-                    ]);
-                }
-            }
-        }
-
-        return $result;
     }
 
     /**

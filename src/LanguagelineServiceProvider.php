@@ -3,6 +3,10 @@
 namespace Nos\Languageline;
 
 use Illuminate\Support\ServiceProvider;
+use Nos\LanguageLine\Interfaces\Repositories\LanguageLineRepositoryInterface;
+use Nos\LanguageLine\Interfaces\Repositories\LanguageRepositoryInterface;
+use Nos\LanguageLine\Repositories\LanguageLineRepository;
+use Nos\LanguageLine\Repositories\LanguageRepository;
 use Nos\Languageline\Services\LanguageService;
 
 final class LanguagelineServiceProvider extends ServiceProvider
@@ -62,6 +66,8 @@ final class LanguagelineServiceProvider extends ServiceProvider
         $this->mergeConfigFrom(__DIR__ . '/../config/languageline.php', 'languageline');
 
         $this->app->bind(LanguageService::class);
+        $this->app->bind(LanguageRepositoryInterface::class, LanguageRepository::class);
+        $this->app->bind(LanguageLineRepositoryInterface::class, LanguageLineRepository::class);
 
         // Register the service the package provides.
         $this->app->singleton('languageline', function ($app) {
