@@ -14,26 +14,25 @@
 namespace Nos\LanguageLine\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Gate;
 
 /**
  * Class StoreRequest
  * @package Nos\CRUD
  */
-class StoreRequest extends FormRequest
+final class StoreRequest extends FormRequest
 {
     /**
      * authorize
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
 
     /**
-    * rules
-    */
-    public function rules()
+     * rules
+     */
+    public function rules(): array
     {
         return [
             'group' => 'required|string',

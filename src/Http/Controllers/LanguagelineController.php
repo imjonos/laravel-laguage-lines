@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use Exception;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Contracts\View\Factory;
-use Illuminate\Filesystem\Filesystem;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Redirector;
@@ -69,77 +68,60 @@ class LanguagelineController extends Controller
      * List of records
      * @param IndexRequest $request
      * @return Factory|View|JsonResponse
+     * @throws BindingResolutionException
      */
     public function index(IndexRequest $request): Factory|View|JsonResponse
     {
-        $fields = ['id', 'group', 'key', 'text',];
-        $model = new LanguageLine();
-        $data = $model->search($fields);
-        $data = $data->paginate($request->get('per_page', 10));
+        $fields = ['id', 'group', 'key', 'text'];
+        $with = [
 
+        ];
+        $limit = $request->get('per_page', 10);
+        $data = $this->languageLineService->search($request->all(), $fields, $with, $limit);
+        $response = [
+            'data' => $data,
+            'selected' => [
+                'id' => $request->get('id'),
+                'group' => $request->get('group'),
+                'key' => $request->get('key'),
+                'text' => $request->get('text')
+            ]
+        ];
         if ($request->ajax()) {
-            return response()->json(['data' => $data]);
+            return response()->json($response);
         }
 
-        return view("nos.languageline::admin.languagelines.index", ["data" => $data]);
+        return view('nos.languageline::admin.languagelines.index', $response);
     }
 
     /**
      * Store row
      * @param StoreRequest $request
      * @return JsonResponse|RedirectResponse|Redirector
+     * @throws Exception
      */
     public function store(StoreRequest $request): JsonResponse|Redirector|RedirectResponse
     {
-        $newItem = LanguageLine::create($request->all());
+        $newItem = $this->languageLineService->create($request->validated());
         if ($request->ajax()) {
             return response()->json(['data' => $newItem], '201');
         }
 
-        return redirect('/languagelines');
+        return response()->redirectToRoute('languagelines.index');
     }
 
     /**
      * Create form
      * @param CreateRequest $request
      * @return Factory|View
-     * @throws BindingResolutionException
+     * @throws BindingResolutionException|Exception
      */
     public function create(CreateRequest $request): Factory|View
     {
-        return view("nos.languageline::admin.languagelines.create", ['languages' => $this->getDirsWithLanguages()]);
-    }
-
-    /**
-     * Get Array with languages name and path
-     * @return array ['language_name' => directory_path]
-     * @throws BindingResolutionException
-     * @throws Exception
-     */
-    protected function getDirsWithLanguages(): array
-    {
-        $result = [];
-        $fs = new Filesystem();
-        $dirs = $fs->directories(base_path("resources/lang"));
-        foreach ($dirs as $dir) {
-            $lang = basename($dir);
-            if ($lang != "vendor") {
-                $result[$lang] = $dir;
-
-                // save a language to DB if doesnt exists
-                $result = $this->languageService->search(['abbr' => $lang]);
-
-                if (!$result->count()) {
-                    $this->languageService->create([
-                        'abbr' => $lang,
-                        'name' => $lang,
-                        'active' => 1
-                    ]);
-                }
-            }
-        }
-
-        return $result;
+        return view(
+            "nos.languageline::admin.languagelines.create",
+            ['languages' => $this->languageLineService->getDirsWithLanguages()]
+        );
     }
 
     /**
@@ -153,24 +135,22 @@ class LanguagelineController extends Controller
     {
         return view("nos.languageline::admin.languagelines.show", [
             'data' => $languageline,
-            'languages' => $this->getDirsWithLanguages()
+            'languages' => $this->languageLineService->getDirsWithLanguages()
         ]);
     }
 
     /**
      * Edit form
      * @param EditRequest $request
-     * @param int $languageline
+     * @param LanguageLine $languageline
      * @return Factory|View
-     * @throws BindingResolutionException
+     * @throws Exception
      */
-    public function edit(EditRequest $request, int $languageline): Factory|View
+    public function edit(EditRequest $request, LanguageLine $languageline): Factory|View
     {
-        $data = LanguageLine::findOrFail($languageline);
-
         return view("nos.languageline::admin.languagelines.edit", [
-            'data' => $data,
-            'languages' => $this->getDirsWithLanguages()
+            'data' => $languageline,
+            'languages' => $this->languageLineService->getDirsWithLanguages()
         ]);
     }
 
@@ -184,30 +164,30 @@ class LanguagelineController extends Controller
         DestroyRequest $request,
         LanguageLine $languageline
     ): JsonResponse|Redirector|RedirectResponse {
-        $languageline->delete();
+        $this->languageLineService->delete($languageline->id);
         if ($request->ajax()) {
             return response()->json([], 204);
         }
 
-        return redirect('/languagelines');
+        return response()->redirectToRoute('languagelines.index');
     }
 
     /**
      * Destroy multiple rows
      * @param MassDestroyRequest $request
      * @return JsonResponse|RedirectResponse|Redirector
+     * @throws BindingResolutionException
      */
     public function massDestroy(MassDestroyRequest $request): JsonResponse|Redirector|RedirectResponse
     {
-        $forDestroy = LanguageLine::whereIn('id', $request->get('selected'))->get();
-        foreach ($forDestroy as $item) {
-            $item->delete();
+        foreach ($request->get('selected', []) as $id) {
+            $this->languageLineService->delete($id);
         }
         if ($request->ajax()) {
             return response()->json([], 204);
         }
 
-        return redirect('/languagelines');
+        return response()->redirectToRoute('languagelines.index');
     }
 
     /**
@@ -215,14 +195,17 @@ class LanguagelineController extends Controller
      * @param ToggleBooleanRequest $request
      * @param LanguageLine $languageline
      * @return JsonResponse
+     * @throws BindingResolutionException
      */
     public function toggleBoolean(ToggleBooleanRequest $request, LanguageLine $languageline): JsonResponse
     {
         if (!in_array($request->get('column_name'), $languageline->getTableColumns()) ||
-            $languageline->getKeyType($request->get('column_name')) != 'int') {
+            $languageline->getKeyType($request->get('column_name')) !== 'int') {
             abort(400, 'Wrong column!');
         }
-        $languageline->update([$request->get('column_name') => $request->get('value')]);
+        $this->languageLineService->update($languageline->id, [
+            $request->get('column_name') => $request->get('value')
+        ]);
 
         return response()->json(['data' => $languageline]);
     }
@@ -232,79 +215,27 @@ class LanguagelineController extends Controller
      * @param UpdateRequest $request
      * @param LanguageLine $languageline
      * @return JsonResponse|RedirectResponse|Redirector
+     * @throws BindingResolutionException
      */
     public function update(UpdateRequest $request, LanguageLine $languageline): JsonResponse|Redirector|RedirectResponse
     {
-        $languageline->update($request->all());
+        $this->languageLineService->update($languageline->id, $request->validated());
         if ($request->ajax()) {
             return response()->json(['data' => $languageline]);
         }
 
-        return redirect('/languagelines');
+        return response()->redirectToRoute('languagelines.index');
     }
 
     /**
      * Scan Translations
      * @return JsonResponse
+     * @throws BindingResolutionException
      */
     public function scanTranslations(): JsonResponse
     {
-        $this->storeLanguagesVarsToDB();
+        $this->languageLineService->storeLanguagesVarsToDB();
 
         return response()->json([], "204");
-    }
-
-    /**
-     * Scan languages directory and copy translations to DB
-     */
-    protected function storeLanguagesVarsToDB(): void
-    {
-        foreach ($this->getDirsWithLanguages() as $lang => $dir) {
-            $fs = new Filesystem();
-            $files = $fs->files($dir);
-            foreach ($files as $fileName) {
-                $filePath = $dir . "/" . $fileName->getRelativePathname();
-                $array = (file_exists($filePath)) ? require($filePath) : [];
-                $this->saveLanguageValueToDB(basename($fileName->getRelativePathname(), ".php"), $lang, [], $array);
-            }
-        }
-    }
-
-    /**
-     * Get the translations array and save it to DB
-     * @param string $group
-     * @param string $lang
-     * @param array $keys
-     * @param array $array
-     */
-    protected function saveLanguageValueToDB(
-        string $group = "crud",
-        string $lang = "en",
-        array $keys = [],
-        array $array = []
-    ): void {
-        foreach ($array as $key => $item) {
-            $keysForDB = $keys;
-            $keysForDB[] = $key;
-            if (is_array($item)) {
-                $this->saveLanguageValueToDB($group, $lang, $keysForDB, $item);
-            } else {
-                $translationsArray[$lang] = $item;
-                $keyString = implode(".", $keysForDB);
-                $languageLine = LanguageLine::where('group', $group)->where('key', $keyString)->first();
-
-                if (!$languageLine) {
-                    LanguageLine::create([
-                        'group' => $group,
-                        'key' => $keyString,
-                        'text' => $translationsArray,
-                    ]);
-                } else {
-                    $translationsArrayMerged = array_merge($languageLine->text, $translationsArray);
-                    $languageLine->text = $translationsArrayMerged;
-                    $languageLine->save();
-                }
-            }
-        }
     }
 }

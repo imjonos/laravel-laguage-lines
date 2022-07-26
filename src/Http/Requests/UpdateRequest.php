@@ -14,26 +14,25 @@
 namespace Nos\LanguageLine\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Gate;
 
 /**
  * Class UpdateRequest
  * @package Nos\CRUD
  */
-class UpdateRequest extends FormRequest
+final class UpdateRequest extends FormRequest
 {
     /**
      * authorize
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
 
     /**
-    * rules
-    */
-    public function rules()
+     * rules
+     */
+    public function rules(): array
     {
         return [
             'group' => 'sometimes|string',
