@@ -4,7 +4,7 @@ namespace Nos\LanguageLine\Repositories;
 
 use Nos\CRUD\Repositories\BaseRepository;
 use Nos\LanguageLine\Interfaces\Repositories\LanguageLineRepositoryInterface;
-use Nos\Languageline\Models\LanguageLine;
+use Nos\LanguageLine\Models\LanguageLine;
 
 /**
  * @method LanguageLine getModel()

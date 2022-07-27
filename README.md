@@ -4,8 +4,8 @@ Laravel package for work with translations from DB
 
 CRUD package required https://github.com/imjonos/laravel-crud-generator
 
-./artisan migrate
-./artisan vendor:publish
+php artisan vendor:publish
+php artisan migrate
 
 Need to add these
 

@@ -24,14 +24,14 @@ use Nos\LanguageLine\Http\Requests\{CreateRequest,
 };
 use Nos\LanguageLine\Imports\LanguageLinesImport;
 use Nos\LanguageLine\Models\LanguageLine;
-use Nos\Languageline\Services\LanguageLineService;
-use Nos\Languageline\Services\LanguageService;
+use Nos\LanguageLine\Services\LanguageLineService;
+use Nos\LanguageLine\Services\LanguageService;
 
 /**
  * Class CRUDController
  * @package Nos\CRUD\Http\Controllers
  */
-class LanguagelineController extends Controller
+class LanguageLineController extends Controller
 {
 
     use Exportable;

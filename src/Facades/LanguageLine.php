@@ -1,10 +1,10 @@
 <?php
 
-namespace Nos\Languageline\Facades;
+namespace Nos\LanguageLine\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
-class Languageline extends Facade
+class LanguageLine extends Facade
 {
     /**
      * Get the registered name of the component.

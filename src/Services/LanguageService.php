@@ -1,6 +1,6 @@
 <?php
 
-namespace Nos\Languageline\Services;
+namespace Nos\LanguageLine\Services;
 
 use Nos\CRUD\Services\BaseService;
 use Nos\LanguageLine\Interfaces\Repositories\LanguageRepositoryInterface;

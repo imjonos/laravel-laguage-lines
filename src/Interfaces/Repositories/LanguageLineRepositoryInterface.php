@@ -3,7 +3,7 @@
 namespace Nos\LanguageLine\Interfaces\Repositories;
 
 use Nos\BaseRepository\Interfaces\EloquentRepositoryInterface;
-use Nos\Languageline\Models\LanguageLine;
+use Nos\LanguageLine\Models\LanguageLine;
 
 interface LanguageLineRepositoryInterface extends EloquentRepositoryInterface
 {

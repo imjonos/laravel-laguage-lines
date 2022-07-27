@@ -1,6 +1,6 @@
 <?php
 
-namespace Nos\Languageline\Services;
+namespace Nos\LanguageLine\Services;
 
 use Exception;
 use Illuminate\Contracts\Container\BindingResolutionException;

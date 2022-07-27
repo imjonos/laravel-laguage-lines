@@ -1,6 +1,6 @@
 <?php
 
-namespace Nos\Languageline\Models;
+namespace Nos\LanguageLine\Models;
 
 use Illuminate\Database\Eloquent\Builder;
 use Nos\CRUD\Traits\Crudable;

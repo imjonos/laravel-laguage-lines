@@ -1,6 +1,6 @@
 <?php
 
-namespace Nos\Languageline;
+namespace Nos\LanguageLine;
 
 use Illuminate\Support\ServiceProvider;
 use Nos\LanguageLine\Interfaces\Repositories\LanguageLineRepositoryInterface;
@@ -9,7 +9,7 @@ use Nos\LanguageLine\Repositories\LanguageLineRepository;
 use Nos\LanguageLine\Repositories\LanguageRepository;
 use Nos\Languageline\Services\LanguageService;
 
-final class LanguagelineServiceProvider extends ServiceProvider
+final class LanguageLineServiceProvider extends ServiceProvider
 {
     /**
      * Perform post-registration booting of services.
