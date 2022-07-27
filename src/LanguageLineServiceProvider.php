@@ -42,17 +42,17 @@ final class LanguageLineServiceProvider extends ServiceProvider
 
         // Publishing the views.
         $this->publishes([
-            __DIR__ . '/../resources/views' => base_path('resources/views/vendor/codersstudio/languageline')
+            __DIR__ . '/../resources/views' => base_path('resources/views/vendor/nos/languageline')
         ], 'languageline.views');
 
         // Publishing the js.
         $this->publishes([
-            __DIR__ . '/../resources/js' => base_path('resources/js/vendor/codersstudio/languageline'),
+            __DIR__ . '/../resources/js' => base_path('resources/js/vendor/nos/languageline'),
         ], 'languageline.js');
 
         // Publishing the translation files.
         $this->publishes([
-            __DIR__ . '/../resources/lang' => resource_path('lang/vendor/codersstudio/languageline'),
+            __DIR__ . '/../resources/lang' => resource_path('lang/vendor/nos/languageline'),
         ], 'languageline.lang');
     }
 
