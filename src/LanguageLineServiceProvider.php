@@ -18,8 +18,8 @@ final class LanguageLineServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        $this->loadTranslationsFrom(__DIR__ . '/../resources/lang', 'nos.languageline');
-        $this->loadViewsFrom(__DIR__ . '/../resources/views', 'nos.languageline');
+        $this->loadTranslationsFrom(resource_path('lang/vendor/nos/languageline'), 'nos.languageline');
+        $this->loadViewsFrom(resource_path('views/vendor/nos/languageline'), 'nos.languageline');
         $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
         $this->loadRoutesFrom(__DIR__ . '/../routes/web.php');
         // Publishing is only necessary when using the CLI.

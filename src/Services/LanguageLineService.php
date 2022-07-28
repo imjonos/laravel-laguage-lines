@@ -57,9 +57,9 @@ final class LanguageLineService extends BaseService
                 $result[$lang] = $dir;
 
                 // save a language to DB if doesnt exists
-                $result = $this->languageRepository->findByAbbr($lang);
+                $language = $this->languageRepository->findByAbbr($lang);
 
-                if (!$result) {
+                if (!$language) {
                     $this->languageRepository->create([
                         'abbr' => $lang,
                         'name' => $lang,
