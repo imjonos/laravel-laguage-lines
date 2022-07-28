@@ -20,7 +20,6 @@ final class LanguageLineServiceProvider extends ServiceProvider
     {
         $this->loadTranslationsFrom(resource_path('lang/vendor/nos/languageline'), 'nos.languageline');
         $this->loadViewsFrom(resource_path('views/vendor/nos/languageline'), 'nos.languageline');
-        $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
         $this->loadRoutesFrom(__DIR__ . '/../routes/web.php');
         // Publishing is only necessary when using the CLI.
         if ($this->app->runningInConsole()) {
@@ -54,6 +53,11 @@ final class LanguageLineServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__ . '/../resources/lang' => resource_path('lang/vendor/nos/languageline'),
         ], 'languageline.lang');
+
+        // Publishing migrations
+        $this->publishes([
+            __DIR__ . '/../database/migrations' => base_path('database/migrations'),
+        ], 'languageline.migrations');
     }
 
     /**
