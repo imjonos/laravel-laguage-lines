@@ -7,5 +7,5 @@ use Nos\LanguageLine\Models\LanguageLine;
 
 interface LanguageLineRepositoryInterface extends EloquentRepositoryInterface
 {
-    public function findByGroupAndKey(string $key, string $group): ?LanguageLine;
+    public function findByGroupAndKey(string $group, string $key): ?LanguageLine;
 }

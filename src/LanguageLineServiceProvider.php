@@ -71,7 +71,7 @@ final class LanguageLineServiceProvider extends ServiceProvider
 
         // Register the service the package provides.
         $this->app->singleton('languageline', function ($app) {
-            return new Languageline;
+            return new Languageline();
         });
     }
 

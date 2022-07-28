@@ -26,6 +26,7 @@ final class LanguageLineService extends BaseService
      * Scan languages directory and copy translations to DB
      *
      * @throws BindingResolutionException
+     * @throws Exception
      */
     public function storeLanguagesVarsToDB(): void
     {

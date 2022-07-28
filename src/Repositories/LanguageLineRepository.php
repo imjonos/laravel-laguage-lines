@@ -13,7 +13,7 @@ final class LanguageLineRepository extends BaseRepository implements LanguageLin
 {
     protected string $class = LanguageLine::class;
 
-    public function findByGroupAndKey(string $key, string $group): ?LanguageLine
+    public function findByGroupAndKey(string $group, string $key): ?LanguageLine
     {
         return $this->getModel()
             ->ofKey($key)
