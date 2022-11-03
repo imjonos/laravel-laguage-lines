@@ -2,6 +2,7 @@
 
 namespace Nos\LanguageLine\Models;
 
+use DateTimeInterface;
 use Illuminate\Database\Eloquent\Builder;
 use Nos\CRUD\Traits\Crudable;
 use Spatie\TranslationLoader\LanguageLine as SpatieModel;
@@ -37,6 +38,13 @@ final class LanguageLine extends SpatieModel
     ];
 
     protected $hidden = [];
+
+    /**
+     * The storage format of the model's date columns.
+     *
+     * @var string
+     */
+    protected $dateFormat = 'Y-m-d H:i:s';
 
 
     /**
@@ -89,5 +97,16 @@ final class LanguageLine extends SpatieModel
     public function scopeOfText(Builder $query, string $value): Builder
     {
         return $query->where('text', 'like', "%" . $value . "%");
+    }
+
+    /**
+     * Prepare a date for array / JSON serialization.
+     *
+     * @param DateTimeInterface $date
+     * @return string
+     */
+    protected function serializeDate(DateTimeInterface $date): string
+    {
+        return $date->format('Y-m-d H:i:s');
     }
 }
