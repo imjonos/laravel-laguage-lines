@@ -1,8 +1,8 @@
-@foreach($languages AS $lang => $dir)
+@foreach($languages AS $lang)
     @component('nos.crud::fields.text', [
         'required' => 1,
-        'label' => $lang,
-        'vModel' => 'form.text.'.$lang,
+        'label' => $lang->abbr,
+        'vModel' => 'form.text.'.$lang->abbr,
         'name' => 'text',
         'placeholder' => trans('nos.languageline::crud.languageline.columns.text')
     ])
