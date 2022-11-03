@@ -121,7 +121,7 @@ class LanguageLineController extends Controller
         return view(
             "nos.languageline::admin.languagelines.create",
             [
-                'languages' => $this->languageService->all()
+                'languages' => $this->languageService->getActiveLanguages()
             ]
         );
     }
@@ -152,7 +152,7 @@ class LanguageLineController extends Controller
     {
         return view("nos.languageline::admin.languagelines.edit", [
             'data' => $languageline,
-            'languages' => $this->languageService->all()
+            'languages' => $this->languageService->getActiveLanguages()
         ]);
     }
 
