@@ -72,7 +72,7 @@ class LanguageLineController extends Controller
      */
     public function index(IndexRequest $request): Factory|View|JsonResponse
     {
-        $fields = ['id', 'group', 'key', 'text'];
+        $fields = ['id', 'group', 'key', 'text', 'created_at'];
         $with = [
 
         ];
