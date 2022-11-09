@@ -105,10 +105,11 @@ final class LanguageLineService extends BaseService
                         'text' => $translationsArray,
                     ]);
                 } else {
+                    $text = array_merge($translationsArray, $languageLine->text);
                     $this->getRepository()->update(
                         $languageLine->id,
                         [
-                            'text' => array_merge($languageLine->text, $translationsArray)
+                            'text' => $text
                         ]
                     );
                 }
